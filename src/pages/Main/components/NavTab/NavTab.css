@@ -1,0 +1,31 @@
+.nav-tab {
+    display: flex;
+    justify-content: center;
+    gap: 0 10px;
+}
+
+.nav-tab__link {
+    box-sizing: border-box;
+    padding: 10px 17px;
+    color: #FFF;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    text-decoration: none;
+    background-color: #303030;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 500px) {
+    .nav-tab {
+        gap: 0 6px;
+    }
+
+    .nav-tab__link {
+        padding: 5px 12px;
+        font-size: 10px;
+        line-height: 16px;
+    }
+}

@@ -4,8 +4,6 @@
 
 @import "components/App/App.css";
 
-@import "layouts/MainLayout/MainLayout.css";
-
 @import "pages/Main/Main.css";
 
 @import "components/Header/Header.css";
@@ -14,6 +12,16 @@
 
 @import "components/Header/components/Navigation/Navigation.css";
 
+@import "pages/Main/components/Promo/Promo.css";
+
+@import "pages/Main/components/AboutProject/AboutProject.css";
+
+@import "pages/Main/components/Techs/Techs.css";
+
+@import "pages/Main/components/NavTab/NavTab.css";
+
 @import "ui/ButtonBurger/ButtonBurger.css";
 
 @import "ui/ButtonAccount/ButtonAccount.css";
+
+@import "ui/SectionTitle/SectionTitle.css";

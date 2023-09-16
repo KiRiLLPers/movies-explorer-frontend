@@ -1,16 +1,19 @@
 .footer {
+    box-sizing: border-box;
     width: 100%;
-    max-width: 1140px;
+    max-width: 1280px;
     display: flex;
     flex-direction: column;
-    padding: 79px 0 20px;
+    padding: 79px 70px 20px 70px;
+    background-color: #202020;
+    margin: 0 auto;
 }
 
 .footer__text {
     margin: 0;
     color: #8B8B8B;
     text-align: center;
-    font-family: 'Inter', sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -29,7 +32,7 @@
 
 .footer__item {
     color: #FFF;
-    font-family: 'Inter', sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -43,14 +46,24 @@
 .footer__link {
     text-decoration: none;
     color: #FFF;
-    font-family: 'Inter', sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
+@media screen and (max-width: 768px){
+    .footer {
+        padding: 79px 30px 20px 30px;
+    }
+}
+
 @media screen and (max-width: 500px) {
+    .footer {
+        padding: 79px 10px 20px 10px;
+    }
+
     .footer__items {
         flex-direction: column-reverse;
         gap: 30px 0;
