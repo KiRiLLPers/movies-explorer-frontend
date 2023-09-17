@@ -26,8 +26,24 @@
 
 @import "pages/NotFound/NotFound.css";
 
+@import "pages/Movies/Movies.css";
+
+@import "components/SearchSection/SearchSection.css";
+
+@import "components/CardsSection/CardsSection.css";
+
+@import "pages/SavedMovies/SavedMovies.css";
+
 @import "ui/ButtonBurger/ButtonBurger.css";
 
 @import "ui/ButtonAccount/ButtonAccount.css";
 
 @import "ui/SectionTitle/SectionTitle.css";
+
+@import "ui/InputSearch/InputSearch.css";
+
+@import "ui/InputCheckbox/InputCheckbox.css";
+
+@import "ui/Card/Card.css";
+
+@import "ui/Preloader/Preloader.css";
