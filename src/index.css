@@ -20,6 +20,12 @@
 
 @import "pages/Main/components/NavTab/NavTab.css";
 
+@import "pages/Main/components/AboutMe/AboutMe.css";
+
+@import "pages/Main/components/Portfolio/Portfolio.css";
+
+@import "pages/NotFound/NotFound.css";
+
 @import "ui/ButtonBurger/ButtonBurger.css";
 
 @import "ui/ButtonAccount/ButtonAccount.css";

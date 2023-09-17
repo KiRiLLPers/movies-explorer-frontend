@@ -2,7 +2,7 @@ import React from 'react';
 import SectionTitle from '../../../../ui/SectionTitle/SectionTitle.jsx';
 
 const Techs = () => (
-  <section className='techs'>
+  <section className='techs' id='techs'>
     <SectionTitle title='Технологии'></SectionTitle>
     <div className='techs__wrap'>
       <h2 className='techs__title'>7 технологий</h2>

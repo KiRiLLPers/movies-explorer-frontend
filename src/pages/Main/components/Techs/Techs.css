@@ -57,9 +57,13 @@
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.56px;
-    padding: 22px 26px;
     border-radius: 10px;
     background: #303030;
+    width: 90px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
@@ -80,10 +84,12 @@
     .techs__item {
         font-size: 12px;
         line-height: 18px;
+        width: 84px;
+        height: 57px;
     }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
     .techs {
         padding: 70px 18px;
     }
@@ -104,3 +110,4 @@
         line-height: 16px;
     }
 }
+
