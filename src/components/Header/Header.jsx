@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from '../../images/header/logo.svg';
 import Navigation from './components/Navigation/Navigation.jsx';
+import Logo from '../../ui/Logo/Logo.jsx';
 
 const Header = () => (
     <header className='header'>
-      <img className='header__logo' src={logo} alt="logo"/>
+      <Logo></Logo>
       <Navigation></Navigation>
     </header>
 );

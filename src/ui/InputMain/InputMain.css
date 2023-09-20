@@ -1,0 +1,29 @@
+.main-input-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px 0;
+}
+
+.label {
+  color: #8B8B8B;
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.main-input {
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 15px;
+  margin: 0;
+  border: none;
+  border-radius: 8px;
+  background: #2F2F2F;
+  outline: none;
+}
