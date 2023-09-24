@@ -12,6 +12,8 @@
 
 @import "components/Header/components/Navigation/Navigation.css";
 
+@import "components/MenuPopup/MenuPopup.css";
+
 @import "pages/Main/components/Promo/Promo.css";
 
 @import "pages/Main/components/AboutProject/AboutProject.css";
@@ -26,17 +28,19 @@
 
 @import "pages/NotFound/NotFound.css";
 
+@import "pages/Profile/Profile.css";
+
 @import "pages/Movies/Movies.css";
+
+@import "pages/SavedMovies/SavedMovies.css";
+
+@import "pages/Register/Register.css";
+
+@import "pages/Login/Login.css";
 
 @import "components/SearchSection/SearchSection.css";
 
 @import "components/CardsSection/CardsSection.css";
-
-@import "pages/SavedMovies/SavedMovies.css";
-
-@import "pages/Profile/Profile.css";
-
-@import "pages/Register/Register.css";
 
 @import "ui/ButtonBurger/ButtonBurger.css";
 
@@ -57,4 +61,6 @@
 @import "ui/InputMain/InputMain.css";
 
 @import "ui/ButtonSign/ButtonSign.css";
+
+@import "ui/ButtonLink/ButtonLink.css";
 

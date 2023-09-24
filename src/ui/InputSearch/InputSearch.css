@@ -43,6 +43,11 @@
   cursor: pointer;
 }
 
+.input-search__button:hover {
+  opacity: .7;
+}
+
+
 @media screen and (max-width: 500px) {
   .input-search__input {
     padding: 13px;

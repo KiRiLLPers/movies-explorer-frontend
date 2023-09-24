@@ -12,10 +12,10 @@ const Register = () => (
         <form className='register__form'>
           <InputMain label='Имя' type='text'></InputMain>
           <InputMain label='E-mail' type='email'></InputMain>
-          <InputMain label='Пароль' type='password'></InputMain>
+          <InputMain label='Пароль' type='password' error='Что-то пошло не так...'></InputMain>
         </form>
         <ButtonSign title='Зарегистироваться'></ButtonSign>
-        <p className="register__question">Уже зарегистрированы? <Link className='register__link' to='/'>Войти</Link></p>
+        <p className="register__question">Уже зарегистрированы? <Link className='register__link' to='/signin'>Войти</Link></p>
       </section>
     </main>
 );

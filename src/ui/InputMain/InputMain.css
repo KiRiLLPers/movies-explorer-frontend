@@ -1,4 +1,4 @@
-.main-input-wrap {
+.main-input {
   display: flex;
   flex-direction: column;
   gap: 10px 0;
@@ -13,7 +13,7 @@
   line-height: normal;
 }
 
-.main-input {
+.main-input__input {
   color: #FFF;
   font-family: Inter, sans-serif;
   font-size: 13px;
@@ -26,4 +26,22 @@
   border-radius: 8px;
   background: #2F2F2F;
   outline: none;
+}
+
+.main-input__input_error {
+  color: #EE3465;
+}
+
+.main-input__error-text {
+  visibility: hidden;
+  color: #EE3465;
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.main-input__error-text_active {
+  visibility: visible;
 }

@@ -91,6 +91,10 @@
   cursor: pointer;
 }
 
+.profile__button:hover {
+  opacity: .7;
+}
+
 .profile__button:nth-child(2) {
   color: #EE3465;
   font-weight: 500;

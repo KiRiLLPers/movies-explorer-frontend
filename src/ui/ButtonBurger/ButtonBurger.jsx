@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const ButtonBurger = () => {
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const handleOpenBurger = () => {
-    setIsOpenMenu(() => !isOpenMenu);
-  };
-
-  return (
-    <button
-      className={`burger-menu ${isOpenMenu && 'burger-menu_open'}`}
-      type='button'
-      onClick={handleOpenBurger}>
-    </button>
-  );
-};
+const ButtonBurger = ({ handleOpenMenu }) => (
+  <button
+    className='burger-menu'
+    type='button'
+    onClick={handleOpenMenu}>
+  </button>
+);
 
 export default ButtonBurger;

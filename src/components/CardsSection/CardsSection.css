@@ -33,6 +33,10 @@
   cursor: pointer;
 }
 
+.cards__more:hover {
+  opacity: .7;
+}
+
 @media screen and (max-width: 768px) {
   .cards {
     padding: 80px 30px;

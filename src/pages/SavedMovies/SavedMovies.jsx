@@ -23,9 +23,9 @@ const SavedMovies = () => {
     },
   ];
   return (
-    <div className='body'>
+    <div className='body-saved'>
       <Header></Header>
-      <main className='main'>
+      <main className='main-saved'>
         <SearchSection></SearchSection>
         <CardsSection movieArray={movieArray}></CardsSection>
       </main>

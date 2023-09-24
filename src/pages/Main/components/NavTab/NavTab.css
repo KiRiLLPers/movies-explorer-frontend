@@ -18,6 +18,10 @@
     border-radius: 10px;
 }
 
+.nav-tab__link:hover {
+    opacity: .7;
+}
+
 @media screen and (max-width: 500px) {
     .nav-tab {
         gap: 0 6px;

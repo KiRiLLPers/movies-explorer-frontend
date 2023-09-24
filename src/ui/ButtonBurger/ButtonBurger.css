@@ -9,10 +9,11 @@
     border: none;
     padding: 0;
     cursor: pointer;
+    position: relative;
 }
 
-.burger-menu_open {
-    background-image: url(../../images/header/burger-menu-icon-close.svg);
+.burger-menu:hover {
+    opacity: .7;
 }
 
 @media screen and (max-width: 500px) {

@@ -6,6 +6,7 @@ import Movies from '../../pages/Movies/Movies.jsx';
 import SavedMovies from '../../pages/SavedMovies/SavedMovies.jsx';
 import Profile from '../../pages/Profile/Profile.jsx';
 import Register from '../../pages/Register/Register.jsx';
+import Login from '../../pages/Login/Login.jsx';
 
 function App() {
   return (
@@ -33,6 +34,11 @@ function App() {
     <Route
       path={'/signup'}
       element={<Register />}
+    >
+    </Route>
+    <Route
+      path={'/signin'}
+      element={<Login />}
     >
     </Route>
     <Route
