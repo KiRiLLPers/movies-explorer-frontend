@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px 0;
-  margin-bottom: 179px;
+  margin-bottom: 169px;
 }
 
 .login__question {
@@ -63,7 +63,7 @@
 
 @media screen and (max-width: 500px){
   .login {
-    padding: 56px 30px 30px 30px;
+    padding: 63px 30px 30px 30px;
   }
 
   .login__section {
@@ -76,7 +76,7 @@
   }
 
   .login__form {
-    margin-bottom: 267px;
+    margin-bottom: 256px;
   }
 
   .login__question {

@@ -33,8 +33,12 @@
 }
 
 @media screen and (max-width: 500px) {
-  .button-link {
+  .link {
     font-size: 10px;
     line-height: 16px;
+  }
+
+  .link_login {
+    padding: 5px 12px;
   }
 }

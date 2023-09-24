@@ -1,10 +1,10 @@
 .cards {
   box-sizing: border-box;
   width: 100%;
-  padding: 80px 70px;
+  padding: 81px 70px;
   display: flex;
   flex-direction: column;
-  gap: 76px 0;
+  gap: 69px 0;
   align-items: center;
 }
 
@@ -39,25 +39,25 @@
 
 @media screen and (max-width: 768px) {
   .cards {
-    padding: 80px 30px;
-    gap: 50px 0;
+    padding: 80px 30px 70px 30px;
+    gap: 65px 0;
   }
 
   .cards__wrap {
     grid-template-columns: 1fr 1fr;
-    gap: 47px 30px;
+    gap: 43px 30px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .cards {
-    padding: 50px 10px;
-    gap: 63px 0;
+    padding: 50px 10px 79px 10px;
+    gap: 56px 0;
   }
 
   .cards__wrap {
     grid-template-columns: 1fr;
-    gap: 39px 0;
+    gap: 38px 0;
   }
 
   .cards__more {

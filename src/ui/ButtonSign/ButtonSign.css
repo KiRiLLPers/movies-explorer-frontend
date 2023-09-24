@@ -16,6 +16,11 @@
   line-height: normal;
 }
 
+.button-sign_disable {
+  background: #F8F8F8;
+  color: #C2C2C2;
+}
+
 .button-sign:hover {
   opacity: .8;
 }

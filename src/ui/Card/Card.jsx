@@ -7,8 +7,6 @@ const Card = ({ name, time, alt }) => {
     setIsSave(() => !isSave);
   };
 
-  const path = '/saved-movies';
-
   return (
     <div className='card'>
       <img className='card__img' src={photo} alt={alt}/>
@@ -16,7 +14,7 @@ const Card = ({ name, time, alt }) => {
         <h2 className="card__name">{name}</h2>
         <p className="card__time">{time}</p>
       </div>
-      {path === '/movies'
+      {window.location.pathname === '/movies'
         && <button
         className={`card__button ${isSave && 'card__button_save'}`}
         onClick={handleClick}
@@ -24,7 +22,7 @@ const Card = ({ name, time, alt }) => {
       >
           {!isSave ? 'Сохранить' : ''}
       </button>}
-      {path === '/saved-movies' && <button type='button' className={`card__button ${!isSave && 'card__button_delete'}`} onClick={handleClick}></button>}
+      {window.location.pathname === '/saved-movies' && <button type='button' className={`card__button ${!isSave && 'card__button_delete'}`} onClick={handleClick}></button>}
     </div>
   );
 };

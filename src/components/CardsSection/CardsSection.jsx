@@ -15,7 +15,8 @@ const CardsSection = ({ movieArray, path }) => {
             time={movie.time} name={movie.name} key={movie.id}
             alt={'movie-photo'}></Card>)}
         </div>
-        {path === '/movies' && <button className="cards__more" type='button' onClick={click}>Еще</button>}
+        {path === '/movies'
+          && <button className="cards__more" type='button' onClick={click}>Еще</button>}
       </>}
     </div>
   );

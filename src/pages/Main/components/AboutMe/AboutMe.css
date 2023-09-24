@@ -103,7 +103,7 @@
 
 @media screen and (max-width: 500px) {
     .about-me {
-        padding: 70px 14px;
+        padding: 75px 14px 70px 14px;
     }
 
     .about-me__photo {

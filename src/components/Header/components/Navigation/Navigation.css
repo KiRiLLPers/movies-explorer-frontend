@@ -26,27 +26,6 @@
     display: flex;
 }
 
-.navigation__button {
-    padding: 0;
-    background: transparent;
-    border: none;
-    color: #FFF;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-}
-
-.navigation__button_login {
-    box-sizing: border-box;
-    padding: 8px 20px;
-    border-radius: 3px;
-    background: #3DDC84;
-    color: #000;
-}
-
 .navigation__item_size_sm {
     display: none;
 }
@@ -66,8 +45,8 @@
 }
 
 @media screen and (max-width: 500px) {
-    .navigation__button {
-        font-size: 10px;
-        line-height: 16px;
+
+    .navigation__buttons {
+        gap: 0 16px;
     }
 }

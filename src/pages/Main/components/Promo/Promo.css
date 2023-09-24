@@ -3,6 +3,7 @@
     width: 100%;
     min-height: 493px;
     padding: 0 40px;
+    margin-top: 20px;
 }
 
 .promo__wrap {
@@ -15,8 +16,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 160px 0 30px;
+    padding: 159px 0 30px;
     position: relative;
+    gap: 152px;
 }
 
 .promo__title {
@@ -35,11 +37,12 @@
 @media screen and (max-width: 768px) {
     .promo {
         padding: 0 20px;
+        margin-top: 20px;
     }
 
     .promo__wrap {
         padding: 350px 24px 30px 24px;
-        gap: 300px 0;
+        gap: 314px 0;
     }
 
     .promo__title {
@@ -53,6 +56,7 @@
 @media screen and (max-width: 500px) {
     .promo {
         padding: 0 14px;
+        margin-top: 14px;
     }
 
     .promo__wrap {

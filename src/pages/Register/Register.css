@@ -76,10 +76,11 @@
   }
 
   .register__form {
-    margin-bottom: 157px;
+    margin-bottom: 160px;
   }
 
   .register__question {
     font-size: 12px;
+    padding-top: 13px;
   }
 }

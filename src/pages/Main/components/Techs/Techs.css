@@ -2,7 +2,7 @@
     box-sizing: border-box;
     width: 100%;
     max-width: 1280px;
-    padding: 100px 70px;
+    padding: 102px 70px;
     display: flex;
     flex-direction: column;
 }
@@ -72,7 +72,7 @@
     }
 
     .techs__title {
-        margin-top: 90px;
+        margin-top: 82px;
     }
 
     .techs__text {
@@ -91,7 +91,7 @@
 
 @media screen and (max-width: 500px) {
     .techs {
-        padding: 70px 18px;
+        padding: 66px 18px;
     }
     .techs__items {
         display: grid;
