@@ -8,22 +8,28 @@ const Card = ({ name, time, alt }) => {
   };
 
   return (
-    <div className='card'>
-      <img className='card__img' src={photo} alt={alt}/>
-      <div className='card__wrap'>
-        <h2 className="card__name">{name}</h2>
-        <p className="card__time">{time}</p>
-      </div>
-      {window.location.pathname === '/movies'
-        && <button
-        className={`card__button ${isSave && 'card__button_save'}`}
-        onClick={handleClick}
-        type='button'
-      >
-          {!isSave ? 'Сохранить' : ''}
-      </button>}
-      {window.location.pathname === '/saved-movies' && <button type='button' className={`card__button ${!isSave && 'card__button_delete'}`} onClick={handleClick}></button>}
-    </div>
+    <ul className='card'>
+      <li><img className='card__img' src={photo} alt={alt}/></li>
+      <li>
+        <div className='card__wrap'>
+          <h2 className="card__name">{name}</h2>
+          <p className="card__time">{time}</p>
+        </div>
+      </li>
+      <li>
+        {window.location.pathname === '/movies'
+          && <button
+            className={`card__button ${isSave && 'card__button_save'}`}
+            onClick={handleClick}
+            type='button'
+          >
+            {!isSave ? 'Сохранить' : ''}
+          </button>}
+        {window.location.pathname === '/saved-movies' && <button
+            type='button'
+            className={`card__button ${!isSave && 'card__button_delete'}`}
+            onClick={handleClick}></button>}</li>
+    </ul>
   );
 };
 

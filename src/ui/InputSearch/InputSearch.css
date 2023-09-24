@@ -22,6 +22,10 @@
   line-height: 18px;
 }
 
+.input-search__input:focus {
+  border: 1px solid #424141;
+}
+
 .input-search__input::placeholder {
   color: #8B8B8B;
   font-family: Inter, sans-serif;

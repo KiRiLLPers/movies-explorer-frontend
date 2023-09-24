@@ -8,10 +8,10 @@ const Navigation = ({ handleOpenMenu, isOpen }) => {
   return (
     <nav className='navigation'>
       {loggedIn && <ul className='navigation__nav'>
-        <li className='navigation__item navigation__item_size-lg'>
+        <li className='navigation__item navigation__item_size_lg'>
           <ButtonLink title='Фильмы' link='/movies'/>
         </li>
-        <li className='navigation__item navigation__item_size-lg'>
+        <li className='navigation__item navigation__item_size_lg'>
           <ButtonLink title='Сохранённые фильмы' link='/saved-movies'/>
         </li>
         <li className='navigation__item navigation__item_size_sm'>
@@ -21,7 +21,7 @@ const Navigation = ({ handleOpenMenu, isOpen }) => {
       <ul className='navigation__buttons'>
         {
           loggedIn
-          && <li className='navigation__item navigation__item_size-lg'><ButtonAccount></ButtonAccount>
+          && <li className='navigation__item navigation__item_size_lg'><ButtonAccount></ButtonAccount>
           </li>}
         {!loggedIn && <>
           <li className='navigation__item'>
