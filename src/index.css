@@ -1,0 +1,66 @@
+@import "vendor/normalize.css";
+
+@import "vendor/fonts/fonts.css";
+
+@import "components/App/App.css";
+
+@import "pages/Main/Main.css";
+
+@import "components/Header/Header.css";
+
+@import "components/Footer/Footer.css";
+
+@import "components/Header/components/Navigation/Navigation.css";
+
+@import "components/MenuPopup/MenuPopup.css";
+
+@import "pages/Main/components/Promo/Promo.css";
+
+@import "pages/Main/components/AboutProject/AboutProject.css";
+
+@import "pages/Main/components/Techs/Techs.css";
+
+@import "pages/Main/components/NavTab/NavTab.css";
+
+@import "pages/Main/components/AboutMe/AboutMe.css";
+
+@import "pages/Main/components/Portfolio/Portfolio.css";
+
+@import "pages/NotFound/NotFound.css";
+
+@import "pages/Profile/Profile.css";
+
+@import "pages/Movies/Movies.css";
+
+@import "pages/SavedMovies/SavedMovies.css";
+
+@import "pages/Register/Register.css";
+
+@import "pages/Login/Login.css";
+
+@import "components/SearchSection/SearchSection.css";
+
+@import "components/CardsSection/CardsSection.css";
+
+@import "ui/ButtonBurger/ButtonBurger.css";
+
+@import "ui/ButtonAccount/ButtonAccount.css";
+
+@import "ui/SectionTitle/SectionTitle.css";
+
+@import "ui/InputSearch/InputSearch.css";
+
+@import "ui/InputCheckbox/InputCheckbox.css";
+
+@import "ui/Card/Card.css";
+
+@import "ui/Preloader/Preloader.css";
+
+@import "ui/Logo/Logo.css";
+
+@import "ui/InputMain/InputMain.css";
+
+@import "ui/ButtonSign/ButtonSign.css";
+
+@import "ui/ButtonLink/ButtonLink.css";
+

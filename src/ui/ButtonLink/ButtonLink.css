@@ -1,0 +1,44 @@
+.button-link {
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.button-link:hover {
+  opacity: .7;
+}
+
+.link {
+  text-decoration: none;
+  color: #FFF;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+}
+
+.link_login {
+  box-sizing: border-box;
+  padding: 8px 20px;
+  border-radius: 3px;
+  background: #3DDC84;
+  color: #000;
+}
+
+.link_active {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 500px) {
+  .link {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .link_login {
+    padding: 5px 12px;
+  }
+}
