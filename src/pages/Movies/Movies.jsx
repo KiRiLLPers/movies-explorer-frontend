@@ -3,7 +3,7 @@ import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 import SearchSection from '../../components/SearchSection/SearchSection.jsx';
 import CardsSection from '../../components/CardsSection/CardsSection.jsx';
-
+import { moviesApi } from '../../utils/MoviesApi'
 const Movies = () => {
   const movieArray = [
     {
@@ -67,11 +67,23 @@ const Movies = () => {
       time: '1ч 17м',
     },
   ];
+  const handleSearchInput = (e) => {
+    console.log(e.target.value)
+  }
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    moviesApi.getMovies().then((data) => {
+      console.log(data)
+    })
+  }
   return (
     <div className='body'>
       <Header></Header>
       <main className='main'>
-        <SearchSection></SearchSection>
+        <SearchSection
+        onSubmit={handleSearchSubmit}
+        onChange={handleSearchInput}
+        ></SearchSection>
         <CardsSection movieArray={movieArray} path={'/movies'}></CardsSection>
       </main>
       <Footer></Footer>
