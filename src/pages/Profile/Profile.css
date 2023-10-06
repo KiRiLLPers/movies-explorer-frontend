@@ -75,6 +75,9 @@
 .profile__form {
   width: 100%;
   margin-bottom: 189px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
 }
 
 .profile__buttons {
@@ -123,11 +126,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  visibility: hidden;
-}
-
-.profile__error_active {
-  visibility: visible;
+  height: 13px;
 }
 
 @media screen and (max-width: 768px) {

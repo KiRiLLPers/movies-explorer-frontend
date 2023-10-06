@@ -5,7 +5,6 @@ import MenuPopup from '../MenuPopup/MenuPopup.jsx';
 
 const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  console.log(window.location.pathname);
   const handleOpenMenu = () => {
     setIsOpenMenu(() => !isOpenMenu);
   };

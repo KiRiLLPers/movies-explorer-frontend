@@ -1,0 +1,16 @@
+{
+  "extends": ["airbnb-base", "plugin:react/recommended"],
+
+  "rules": {
+    "no-console": "off",
+    "react/prop-types": "off",
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": "off",
+    "import/prefer-default-export": "off",
+    "no-undef": "off",
+    "react/react-in-jsx-scope": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-shadow": "off",
+    "prefer-promise-reject-errors": "off"
+  }
+}
