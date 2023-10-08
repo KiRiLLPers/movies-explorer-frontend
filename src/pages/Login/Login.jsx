@@ -24,7 +24,6 @@ const Login = () => {
         setUserData({
           ...userData, name: data.name, email: data.email, loggedIn: true,
         });
-        console.log(userData);
       });
   };
 

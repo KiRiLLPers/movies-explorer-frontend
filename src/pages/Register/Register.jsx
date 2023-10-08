@@ -25,13 +25,11 @@ const Register = () => {
         setUserData({
           ...userData, name: data.name, email: data.email, loggedIn: true,
         });
-        console.log(userData);
       });
   };
   const authorize = ({ email, password }) => {
     auth.authorize({ email, password })
       .then((res) => {
-        console.log(res);
         getUserInfo(res.token);
         localStorage.setItem('jwt', res.token);
         setUserData({
@@ -51,7 +49,6 @@ const Register = () => {
       .then((res) => {
         if (res) {
           authorize(formValue);
-          console.log(res);
         }
       })
       .catch((err) => {

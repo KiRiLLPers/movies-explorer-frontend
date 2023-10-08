@@ -18,8 +18,18 @@ const validationErrorText = {
   },
 };
 
+const moviesCardUpdateAfterResize = (width) => {
+  if (width <= 500) {
+    return { initialCount: 5, moreCount: 2 };
+  } if (width <= 768) {
+    return { initialCount: 8, moreCount: 2 };
+  }
+  return { initialCount: 12, moreCount: 3 };
+};
+
 export {
   mainApiUrl,
   moviesApiUrl,
   validationErrorText,
+  moviesCardUpdateAfterResize,
 };

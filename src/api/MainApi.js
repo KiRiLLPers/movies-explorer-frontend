@@ -43,7 +43,7 @@ class MainApi {
   }
 
   saveMovies(movie, token) {
-    return this._request(`${mainApiUrl}/movies`, {
+    return this._request('/movies', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -54,7 +54,7 @@ class MainApi {
   }
 
   deleteMovie(id, token) {
-    return this._request(`${mainApiUrl}/movies/${id}`, {
+    return this._request(`/movies/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

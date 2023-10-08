@@ -7,6 +7,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from '../../hooks/useForm';
 import { mainApi } from '../../api/MainApi';
 import { validationErrorText } from '../../constants';
+import { MoviesContext } from '../../contexts/MoviesContext';
 
 const Profile = () => {
   const [isCorrect, setIsCorrect] = useState(false);
@@ -18,6 +19,7 @@ const Profile = () => {
   } = useForm();
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(CurrentUserContext);
+  const { setMoviesData } = useContext(MoviesContext);
 
   const handleCorrectProfile = () => {
     setIsCorrect(() => !isCorrect);
@@ -26,6 +28,16 @@ const Profile = () => {
   const logOut = () => {
     setUserData({ ...userData, loggedIn: false });
     localStorage.clear();
+    setMoviesData({
+      moviesArray: [],
+      moviesFiltered: [],
+      moviesSearchText: '',
+      moviesCheckboxFiltered: false,
+      savedMoviesArray: [],
+      savedMoviesArrayFiltered: [],
+      savedMoviesSearchText: '',
+      savedMoviesCheckboxFiltered: false,
+    });
     navigate('/', { replace: true });
   };
 
@@ -34,8 +46,7 @@ const Profile = () => {
     if (formValue.name !== userData.name || formValue.email !== userData.email) {
       mainApi
         .updateUserProfile(formValue, localStorage.getItem('jwt'))
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           setIsCorrect(false);
           setUserData({ ...userData, name: formValue.name, email: formValue.email });
           setErrorText('');
@@ -72,14 +83,13 @@ const Profile = () => {
   }, []);
 
   const isNewUserData = formValue.name === userData.name && formValue.email === userData.email;
-  console.log(isNewUserData);
   return (
     <div className='body'>
       <Header></Header>
       <main className='main'>
         <section className="profile">
           <div className="profile__wrap">
-            <h1 className="profile__title">Привет, Виталий!</h1>
+            <h1 className="profile__title">Привет, {userData.name}!</h1>
             {isCorrect
               ? <form className='profile__form'>
                 <InputMain

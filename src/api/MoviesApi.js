@@ -1,4 +1,5 @@
 import { moviesApiUrl } from '../constants';
+import { mainApi } from './MainApi';
 
 class MoviesApi {
   constructor() {
@@ -14,10 +15,21 @@ class MoviesApi {
     return fetch(`${this._baseUrl}${endUrl}`, options).then(this._checkStatus);
   }
 
-  getMovies() {
-    return this._request('/beatfilm-movies', {
+  async getMovies() {
+    const movies = await this._request('/beatfilm-movies', {
       headers: this._headers,
     });
+    const savedMovies = await mainApi.getSavedMovies(localStorage.getItem('jwt'));
+
+    const savedId = savedMovies.map((el) => el.id);
+    movies.forEach((el) => {
+      if (savedId.includes(el.id)) {
+        // eslint-disable-next-line no-param-reassign
+        el.isLiked = true;
+      }
+    });
+
+    return movies;
   }
 }
 

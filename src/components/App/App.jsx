@@ -9,15 +9,22 @@ import Profile from '../../pages/Profile/Profile.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import Login from '../../pages/Login/Login.jsx';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { mainApi } from '../../api/MainApi';
 import { auth } from '../../api/AuthApi';
 import ProtectedRouteElement from '../../utils/ProtectedRouteElement.jsx';
+import { MoviesContext } from '../../contexts/MoviesContext';
 
 function App() {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
     loggedIn: false,
+  });
+
+  const [moviesData, setMoviesData] = useState({
+    moviesArray: [],
+    moviesFiltered: [],
+    moviesSearchText: '',
+    moviesCheckboxFiltered: false,
   });
 
   const handleTokenCheck = () => {
@@ -27,29 +34,32 @@ function App() {
         .checkToken(token)
         .then((res) => {
           if (res) {
-            mainApi
-              .getUserInfo(token)
-              .then((data) => {
-                setUserData({
-                  ...userData, name: data.name, email: data.email, loggedIn: true,
-                });
-              })
-              .catch((err) => {
-                setUserData({ ...userData, loggedIn: false });
-                localStorage.clear();
-                console.error(err);
-              });
+            setUserData({
+              ...userData, name: res.name, email: res.email, loggedIn: true,
+            });
           }
+        })
+        .catch((err) => {
+          setUserData({ ...userData, loggedIn: false });
+          localStorage.clear();
+          console.error(err);
         });
     }
   };
 
   useEffect(() => {
+    window.history.scrollRestoration = 'manual';
     handleTokenCheck();
+    const movies = JSON.parse(localStorage.getItem('movies'));
+    if (movies) {
+      setMoviesData(movies);
+    }
   }, []);
+
   return (
     <CurrentUserContext.Provider value={{ userData, setUserData }}>
-        <Routes>
+        <MoviesContext.Provider value={{ moviesData, setMoviesData }}>
+          <Routes>
             <Route
               path={'/'}
               element={<Main/>}
@@ -57,11 +67,11 @@ function App() {
             <Route
               path={'/movies'}
               element={
-              <ProtectedRouteElement
-                element={Movies}
-                loggedIn={userData.loggedIn}
-              />
-            }
+                <ProtectedRouteElement
+                  element={Movies}
+                  loggedIn={userData.loggedIn}
+                />
+              }
             >
             </Route>
             <Route
@@ -84,17 +94,27 @@ function App() {
             />
             <Route
               path={'/signup'}
-              element={<Register/>}
+              element={
+              <ProtectedRouteElement
+                element={Register}
+                loggedIn={!userData.loggedIn}
+              />}
             />
             <Route
               path={'/signin'}
-              element={<Login/>}
+              element={
+              <ProtectedRouteElement
+                element={Login}
+                loggedIn={!userData.loggedIn}
+              />
+            }
             />
             <Route
               path={'*'}
               element={<NotFound/>}
             />
-        </Routes>
+          </Routes>
+        </MoviesContext.Provider>
     </CurrentUserContext.Provider>
   );
 }
