@@ -12,34 +12,34 @@ import { filteredMovies } from '../../utils/FilteredMovies';
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { moviesData, setMoviesData } = useContext(MoviesContext);
-  const [errorText, setErorText] = useState('');
+  const [errorText, setErrorText] = useState('');
   const handleSearchInput = (e) => {
     setMoviesData({ ...moviesData, moviesSearchText: e.target.value.toLowerCase() });
   };
+
+  const prepareData = (movies) => {
+    const filteredArray = filteredMovies({ ...moviesData, moviesArray: movies });
+    setMoviesData({ ...moviesData, moviesArray: movies, moviesFiltered: filteredArray });
+    localStorage.setItem('movies', JSON.stringify(moviesData));
+  };
+
   const [savedMovies, setIsSavedMovies] = useState([]);
   const handleChecked = (e) => {
     if (e.target.checked) {
-      setMoviesData({ ...moviesData, moviesCheckboxFiltered: true });
+      const filteredArray = filteredMovies({ ...moviesData, moviesCheckboxFiltered: true });
+      setMoviesData({ ...moviesData, moviesFiltered: filteredArray, moviesCheckboxFiltered: true });
+      localStorage.setItem('movies', JSON.stringify(moviesData));
     } else {
-      setMoviesData({ ...moviesData, moviesCheckboxFiltered: false });
+      const filteredArray = filteredMovies({ ...moviesData, moviesCheckboxFiltered: false });
+      setMoviesData(
+        { ...moviesData, moviesFiltered: filteredArray, moviesCheckboxFiltered: false },
+      );
+      localStorage.setItem('movies', JSON.stringify(moviesData));
     }
   };
 
-  useEffect(() => {
-    mainApi
-      .getSavedMovies(localStorage.getItem('jwt'))
-      .then((movies) => {
-        if (movies.length) {
-          setIsSavedMovies([...movies]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   const handleSaveOrDeleteMovie = (movie) => {
-    const isSavedMovie = savedMovies.find((el) => el.id === movie.id);
+    const isSavedMovie = movie.isLiked;
     if (isSavedMovie) {
       mainApi
         .deleteMovie(movie.id, localStorage.getItem('jwt'))
@@ -92,25 +92,20 @@ const Movies = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (moviesData.moviesSearchText === '') {
-      setErorText('Нужно ввести ключевое слово');
+      setErrorText('Нужно ввести ключевое слово');
       return;
     }
     setIsLoading(true);
     moviesApi.getMovies()
       .then((movies) => {
-        setMoviesData({ ...moviesData, moviesArray: movies });
-        const filteredArray = filteredMovies(moviesData);
-        setMoviesData({ ...moviesData, moviesFiltered: filteredArray });
-        setTimeout(() => {
-          localStorage.setItem('movies', JSON.stringify(moviesData));
-        }, 1000);
+        prepareData(movies);
         if (moviesData.moviesFiltered.length === 0) {
-          setErorText('Ничего не найдено');
+          setErrorText('Ничего не найдено');
         }
       })
       .catch((err) => {
         if (err) {
-          setErorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+          setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
         }
       })
       .finally(() => {
@@ -118,25 +113,17 @@ const Movies = () => {
       });
   };
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('movies')) {
-  //     filteredMovies(moviesData, setMoviesData);
-  //   }
-  // }, [
-  //   moviesData.moviesCheckboxFiltered,
-  //   moviesData.moviesArray.length,
-  //   moviesData.moviesFiltered.length,
-  // ]);
-
   useEffect(() => {
-    moviesApi
-      .getMovies()
-      .then((movies) => {
-        setMoviesData({ ...moviesData, moviesArray: movies });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (localStorage.getItem('movies')) {
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          prepareData(movies);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
 
   return (
