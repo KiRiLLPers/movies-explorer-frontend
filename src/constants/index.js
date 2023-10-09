@@ -1,5 +1,5 @@
 const mainApiUrl = 'https://api.pershinkirillvm.nomoredomainsicu.ru';
-// const mainApiUrl = 'http://localhost:3001';
+// const mainApiUrl = 'http://localhost:3000';
 const moviesApiUrl = 'https://api.nomoreparties.co';
 
 const validationErrorText = {

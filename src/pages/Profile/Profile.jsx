@@ -33,10 +33,6 @@ const Profile = () => {
       moviesFiltered: [],
       moviesSearchText: '',
       moviesCheckboxFiltered: false,
-      savedMoviesArray: [],
-      savedMoviesArrayFiltered: [],
-      savedMoviesSearchText: '',
-      savedMoviesCheckboxFiltered: false,
     });
     navigate('/', { replace: true });
   };
