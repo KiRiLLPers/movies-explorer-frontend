@@ -44,17 +44,20 @@ const Movies = () => {
       mainApi
         .deleteMovie(movie.id, localStorage.getItem('jwt'))
         .then(() => {
-          const newArray = moviesData.moviesFiltered.map((el) => {
+          const newSavedMovies = moviesData.moviesFiltered.map((el) => {
             if (movie.id === el.id) {
               return { ...el, isLiked: false };
             }
             return el;
           });
-          setMoviesData({ ...moviesData, moviesFiltered: newArray });
+          setMoviesData({ ...moviesData, moviesFiltered: newSavedMovies });
           const savedMoviesArray = savedMovies
             .filter((el) => el.id !== movie.id);
           setIsSavedMovies([...savedMoviesArray]);
           localStorage.setItem('movies', JSON.stringify(moviesData));
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       const savedMovie = {

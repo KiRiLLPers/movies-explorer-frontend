@@ -27,6 +27,7 @@ const CardsSection = ({
 
     return () => window.removeEventListener('resize', moviesCardUpdate);
   }, [moviesCardUpdate]);
+
   return (
       <>{movieArray.length ? <div className='cards'>
           {isLoading ? <Preloader></Preloader> : <>

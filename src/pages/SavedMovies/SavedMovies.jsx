@@ -16,9 +16,18 @@ const SavedMovies = () => {
   };
 
   const handleChecked = (e) => {
+    const filteredMovies = savedMoviesFiltered.filter((el) => el.duration <= 40);
     if (e.target.checked) {
+      setSavedMoviesFiltered([...filteredMovies]);
+      if (filteredMovies.length === 0) {
+        setErorText('Ничего не найдено');
+      }
       setIsChecked(true);
-    } else setIsChecked(false);
+    } else {
+      setSavedMoviesFiltered([...savedMovies]);
+      setInputText('');
+      setIsChecked(false);
+    }
   };
 
   const handleDeleteMovie = (movie) => {
@@ -40,26 +49,27 @@ const SavedMovies = () => {
     if (isChecked) {
       filteredArray = filteredArray.filter((el) => el.duration <= 40);
     }
+    if (filteredArray.length === 0) {
+      setErorText('Ничего не найдено.');
+    }
     setSavedMoviesFiltered(filteredArray);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (inputText === '') {
-      setErorText('Нужно ввести ключевое слово');
-      return;
+      setSavedMoviesFiltered([...savedMovies]);
     }
     handleFilteredSavedMovies();
   };
-
-  // useEffect(() => {
-  //   handleFilteredSavedMovies();
-  // }, [isChecked, savedMovies.length, savedMoviesFiltered.length]);
 
   useEffect(() => {
     mainApi
       .getSavedMovies(localStorage.getItem('jwt'))
       .then((movies) => {
+        if (movies.length === 0) {
+          setErorText('Нет сохраненных фильмов.');
+        }
         if (movies.length) {
           setIsSavedMovies([...movies]);
           setSavedMoviesFiltered([...movies]);
@@ -77,7 +87,9 @@ const SavedMovies = () => {
         <SearchSection
           handleChecked={handleChecked}
           onChange={handleSearchInput}
-          onSubmit={handleSubmit}>
+          onSubmit={handleSubmit}
+          value={inputText}
+        >
         </SearchSection>
         <CardsSection
           error={errorText}

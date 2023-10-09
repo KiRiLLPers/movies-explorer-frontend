@@ -1,5 +1,5 @@
-// const mainApiUrl = 'https://api.diploma.backend.nomoredomainsicu.ru/';
-const mainApiUrl = 'http://localhost:3001';
+const mainApiUrl = 'https://api.diploma.backend.nomoredomainsicu.ru/';
+// const mainApiUrl = 'http://localhost:3001';
 const moviesApiUrl = 'https://api.nomoreparties.co';
 
 const validationErrorText = {
