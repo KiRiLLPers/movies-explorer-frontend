@@ -149,6 +149,10 @@
   .profile__form {
     margin-bottom: 210px;
   }
+
+  .profile__button-wrap {
+    margin-bottom: 30px;
+  }
 }
 
 @media screen and (max-width: 500px) {
