@@ -1,10 +1,13 @@
-export const filteredMovies = (moviesArray) => {
-  let filterArray = moviesArray.moviesArray
-    .filter((el) => el.nameRU.toLowerCase().includes(moviesArray.moviesSearchText)
-      || el.nameEN.toLowerCase().includes(moviesArray.moviesSearchText));
-  if (moviesArray.moviesCheckboxFiltered) {
-    filterArray = filterArray.filter((el) => el.duration <= 40);
+export const filteredMovies = (moviesArray, filteredMovies) => {
+  console.log(moviesArray, filteredMovies);
+  if (filteredMovies.moviesSearchText && filteredMovies.moviesCheckboxFiltered) {
+    return filteredMovies.moviesFiltered
+      .filter((el) => el.nameRU.toLowerCase().includes(filteredMovies.moviesSearchText)
+        || el.nameEN.toLowerCase().includes(filteredMovies.moviesSearchText))
+      .filter((el) => el.duration <= 40);
   }
 
-  return filterArray;
+  return moviesArray
+    .filter((el) => el.nameRU.toLowerCase().includes(filteredMovies.moviesSearchText)
+      || el.nameEN.toLowerCase().includes(filteredMovies.moviesSearchText));
 };

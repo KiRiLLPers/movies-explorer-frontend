@@ -8,7 +8,8 @@ const CardsSection = ({
 }) => {
   const { initialCount, moreCount } = moviesCardUpdateAfterResize(window.innerWidth);
   const [movieMoreCount, setMovieMoreCount] = useState(moreCount);
-  const [totalMovieCount, setTotalMovieCount] = useState(initialCount);
+  const [initCount, seInitCount] = useState(initialCount);
+  const [totalMovieCount, setTotalMovieCount] = useState(initCount);
   const handleClickMoreMovies = () => {
     setTotalMovieCount(totalMovieCount + movieMoreCount);
   };
@@ -16,17 +17,15 @@ const CardsSection = ({
   const moviesCardUpdate = () => {
     const updateWindowWidth = moviesCardUpdateAfterResize(window.innerWidth);
     setMovieMoreCount(updateWindowWidth.moreCount);
+    seInitCount(updateWindowWidth.initialCount);
     return window.innerWidth;
   };
 
   useEffect(() => {
-    moviesCardUpdate();
-    setTimeout(() => {
-      window.addEventListener('resize', moviesCardUpdate);
-    }, 50);
+    window.addEventListener('resize', moviesCardUpdate);
 
     return () => window.removeEventListener('resize', moviesCardUpdate);
-  }, [moviesCardUpdate]);
+  }, []);
 
   return (
       <>{movieArray.length ? <div className='cards'>

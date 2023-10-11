@@ -1,8 +1,8 @@
-const mainApiUrl = 'https://api.pershinkirillvm.nomoredomainsicu.ru';
-// const mainApiUrl = 'http://localhost:3000';
-const moviesApiUrl = 'https://api.nomoreparties.co';
+// const MAIN_API_URL = 'https://api.pershinkirillvm.nomoredomainsicu.ru';
+const MAIN_API_URL = 'http://localhost:3000';
+const MOVIES_API_URL = 'https://api.nomoreparties.co';
 
-const validationErrorText = {
+const VALIDATION_ERROR_TEXT = {
   500: 'На сервере произошла ошибка, повторите попытку позже.',
   register: {
     409: 'Пользователь с таким email уже существует',
@@ -18,6 +18,9 @@ const validationErrorText = {
   },
 };
 
+const EMAIL_PATTERN = '^[^ ]+@[^ ]+\\.[a-z]{2,6}$';
+const NAME_PATTERN = '^[a-zA-Zа-яёА-ЯЁ]*$';
+
 const moviesCardUpdateAfterResize = (width) => {
   if (width <= 500) {
     return { initialCount: 5, moreCount: 2 };
@@ -28,8 +31,10 @@ const moviesCardUpdateAfterResize = (width) => {
 };
 
 export {
-  mainApiUrl,
-  moviesApiUrl,
-  validationErrorText,
+  MAIN_API_URL,
+  MOVIES_API_URL,
+  VALIDATION_ERROR_TEXT,
   moviesCardUpdateAfterResize,
+  EMAIL_PATTERN,
+  NAME_PATTERN,
 };

@@ -1,8 +1,8 @@
-import { mainApiUrl } from '../constants';
+import { MAIN_API_URL } from '../constants';
 
 class AuthApi {
   constructor() {
-    this._baseUrl = mainApiUrl;
+    this._baseUrl = MAIN_API_URL;
     this._headers = { Accept: 'application/json', 'Content-type': 'application/json' };
   }
 

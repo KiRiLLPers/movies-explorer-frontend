@@ -6,7 +6,7 @@ import ButtonSign from '../../ui/ButtonSign/ButtonSign.jsx';
 import { auth } from '../../api/AuthApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { mainApi } from '../../api/MainApi';
-import { validationErrorText } from '../../constants';
+import { VALIDATION_ERROR_TEXT, EMAIL_PATTERN, NAME_PATTERN } from '../../constants';
 import useForm from '../../hooks/useForm';
 
 const Register = () => {
@@ -53,11 +53,11 @@ const Register = () => {
       })
       .catch((err) => {
         if (err === 409) {
-          setErrorText(validationErrorText.register['409']);
+          setErrorText(VALIDATION_ERROR_TEXT.register['409']);
         } else if (err === 400) {
-          setErrorText(validationErrorText.register['400']);
+          setErrorText(VALIDATION_ERROR_TEXT.register['400']);
         } else {
-          setErrorText(validationErrorText['500']);
+          setErrorText(VALIDATION_ERROR_TEXT['500']);
         }
       })
       .finally(() => {
@@ -86,6 +86,7 @@ const Register = () => {
         error={errors.name}
         onChange={hadnleChangeInput}
         minLength={2}
+        pattern={NAME_PATTERN}
       />
       <InputMain
         label='E-mail'
@@ -93,6 +94,7 @@ const Register = () => {
         name={'email'}
         error={errors.email}
         onChange={hadnleChangeInput}
+        pattern={EMAIL_PATTERN}
       />
       <InputMain
         label='Пароль'

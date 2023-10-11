@@ -6,7 +6,7 @@ import InputMain from '../../ui/InputMain/InputMain.jsx';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from '../../hooks/useForm';
 import { mainApi } from '../../api/MainApi';
-import { validationErrorText } from '../../constants';
+import { EMAIL_PATTERN, NAME_PATTERN, VALIDATION_ERROR_TEXT } from '../../constants';
 import { MoviesContext } from '../../contexts/MoviesContext';
 
 const Profile = () => {
@@ -14,6 +14,7 @@ const Profile = () => {
   const [formValue, setFormValue] = useState({ name: '', email: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState(null);
+  const [successText, setSuccessText] = useState('');
   const {
     errors, isValid, handleChangeInput,
   } = useForm();
@@ -43,17 +44,21 @@ const Profile = () => {
       mainApi
         .updateUserProfile(formValue, localStorage.getItem('jwt'))
         .then(() => {
-          setIsCorrect(false);
+          setSuccessText('Профиль успешно изменен!');
+          setTimeout(() => {
+            setIsCorrect(false);
+            setSuccessText('');
+          }, 1000);
           setUserData({ ...userData, name: formValue.name, email: formValue.email });
           setErrorText('');
         })
         .catch((err) => {
           if (err === 409) {
-            setErrorText(validationErrorText.profile['409']);
+            setErrorText(VALIDATION_ERROR_TEXT.profile['409']);
           } else if (err === 400) {
-            setErrorText(validationErrorText.profile['400']);
+            setErrorText(VALIDATION_ERROR_TEXT.profile['400']);
           } else {
-            setErrorText(validationErrorText['500']);
+            setErrorText(VALIDATION_ERROR_TEXT['500']);
           }
         })
         .finally(() => {
@@ -95,6 +100,7 @@ const Profile = () => {
                   value={userData.name ? userData.name : ''}
                   onChange={handleChange}
                   error={errors.name}
+                  pattern={NAME_PATTERN}
                 />
                 <InputMain
                   type='email'
@@ -103,6 +109,7 @@ const Profile = () => {
                   value={userData.email ? userData.email : ''}
                   onChange={handleChange}
                   error={errors.email}
+                  pattern={EMAIL_PATTERN}
                 />
               </form>
               : <ul className="profile__info">
@@ -111,7 +118,7 @@ const Profile = () => {
               </ul>
             }
             <div className='profile__button-wrap'>
-              <span className='profile__error'>{errorText}</span>
+              <span className={`${errorText ? 'profile__error' : 'profile__success'}`}>{errorText || successText}</span>
               {isCorrect
                 ? <>
                   <ButtonSign

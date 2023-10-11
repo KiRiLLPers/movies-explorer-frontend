@@ -1,8 +1,8 @@
-import { mainApiUrl } from '../constants';
+import { MAIN_API_URL } from '../constants';
 
 class MainApi {
   constructor() {
-    this._baseUrl = mainApiUrl;
+    this._baseUrl = MAIN_API_URL;
   }
 
   _checkStatus(res) {

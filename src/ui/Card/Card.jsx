@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { moviesApiUrl } from '../../constants';
+import { MOVIES_API_URL } from '../../constants';
 
 const Card = ({ handleSaveOrDeleteMovie, movie }) => {
   const location = window.location.pathname;
@@ -25,7 +25,7 @@ const Card = ({ handleSaveOrDeleteMovie, movie }) => {
       >
         <img
           className='card__img'
-          src={`${location === '/movies' ? moviesApiUrl + movie.image.url : movie.image}`}
+          src={`${location === '/movies' ? MOVIES_API_URL + movie.image.url : movie.image}`}
           alt={movie.nameRU}
         />
       </Link>

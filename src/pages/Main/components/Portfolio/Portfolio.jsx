@@ -1,34 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Portfolio = () => (
   <section className='portfolio' id='portfolio'>
     <h2 className='portfolio__title'>Портфолио</h2>
     <div className="portfolio__items">
-      <Link
+      <a
         className='portfolio__link'
         target={'_blank'}
-        to='https://github.com/KiRiLLPers/how-to-learn'
+        href='https://github.com/KiRiLLPers/how-to-learn' rel="noreferrer"
       >
         Статичный сайт
         <span className='portfolio__icon'></span>
-      </Link>
-      <Link
+      </a>
+      <a
         className='portfolio__link'
         target={'_blank'}
-        to='https://github.com/KiRiLLPers/russian-travel'
+        href='https://github.com/KiRiLLPers/russian-travel' rel="noreferrer"
       >
         Адаптивный сайт
         <span className='portfolio__icon'></span>
-      </Link>
-      <Link
+      </a>
+      <a
         className='portfolio__link'
         target={'_blank'}
-        to='https://github.com/KiRiLLPers/react-mesto-api-full-gha'
+        href='https://github.com/KiRiLLPers/react-mesto-api-full-gha' rel="noreferrer"
       >
         Одностраничное приложение
         <span className='portfolio__icon'></span>
-      </Link>
+      </a>
     </div>
   </section>
 );

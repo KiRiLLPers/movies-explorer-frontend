@@ -3,56 +3,43 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Main from '../../pages/Main/Main.jsx';
 import NotFound from '../../pages/NotFound/NotFound.jsx';
-import Movies from '../../pages/Movies/Movies.jsx';
 import SavedMovies from '../../pages/SavedMovies/SavedMovies.jsx';
 import Profile from '../../pages/Profile/Profile.jsx';
 import Register from '../../pages/Register/Register.jsx';
 import Login from '../../pages/Login/Login.jsx';
+import Movies from '../../pages/Movies/Movies.jsx';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { auth } from '../../api/AuthApi';
-import ProtectedRouteElement from '../../utils/ProtectedRouteElement.jsx';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement.jsx';
 import { MoviesContext } from '../../contexts/MoviesContext';
+import { mainApi } from '../../api/MainApi';
 
 function App() {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
-    loggedIn: false,
+    loggedIn: !!localStorage.getItem('jwt'),
   });
 
   const [moviesData, setMoviesData] = useState({
-    moviesArray: [],
     moviesFiltered: [],
     moviesSearchText: '',
     moviesCheckboxFiltered: false,
   });
 
-  const handleTokenCheck = () => {
-    if (localStorage.getItem('jwt')) {
-      const token = localStorage.getItem('jwt');
-      auth
-        .checkToken(token)
-        .then((res) => {
-          if (res) {
-            setUserData({
-              ...userData, name: res.name, email: res.email, loggedIn: true,
-            });
-          }
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      mainApi.getUserInfo(token)
+        .then((user) => {
+          setUserData({
+            ...userData, name: user.name, email: user.email, loggedIn: true,
+          });
         })
         .catch((err) => {
           setUserData({ ...userData, loggedIn: false });
           localStorage.clear();
           console.error(err);
         });
-    }
-  };
-
-  useEffect(() => {
-    window.history.scrollRestoration = 'manual';
-    handleTokenCheck();
-    const movies = JSON.parse(localStorage.getItem('movies'));
-    if (movies) {
-      setMoviesData(movies);
     }
   }, []);
 
@@ -112,7 +99,7 @@ function App() {
             <Route
               path={'*'}
               element={<NotFound/>}
-            />
+              />
           </Routes>
         </MoviesContext.Provider>
     </CurrentUserContext.Provider>

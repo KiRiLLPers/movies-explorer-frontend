@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 import SearchSection from '../../components/SearchSection/SearchSection.jsx';
 import CardsSection from '../../components/CardsSection/CardsSection.jsx';
 import { mainApi } from '../../api/MainApi';
+import { MoviesContext } from '../../contexts/MoviesContext';
 
 const SavedMovies = () => {
   const [savedMovies, setIsSavedMovies] = useState([]);
@@ -11,6 +12,8 @@ const SavedMovies = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [inputText, setInputText] = useState('');
   const [errorText, setErorText] = useState('');
+  const { moviesData, setMoviesData } = useContext(MoviesContext);
+
   const handleSearchInput = (e) => {
     setInputText(e.target.value);
   };
@@ -25,7 +28,6 @@ const SavedMovies = () => {
       setIsChecked(true);
     } else {
       setSavedMoviesFiltered([...savedMovies]);
-      setInputText('');
       setIsChecked(false);
     }
   };
@@ -33,9 +35,17 @@ const SavedMovies = () => {
   const handleDeleteMovie = (movie) => {
     mainApi.deleteMovie(movie.id, localStorage.getItem('jwt'))
       .then(() => {
+        const newMovieData = moviesData.moviesFiltered.map((el) => {
+          if (movie.id === el.id) {
+            return { ...el, isLiked: false };
+          }
+          return el;
+        });
+        setMoviesData({ ...moviesData, moviesFiltered: newMovieData });
         const savedMoviesArray = savedMoviesFiltered
           .filter((el) => el.id !== movie.id);
         setSavedMoviesFiltered([...savedMoviesArray]);
+        localStorage.setItem('savedMovies', JSON.stringify(savedMoviesArray));
       })
       .catch((err) => {
         console.log(err);

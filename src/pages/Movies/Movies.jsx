@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Header from '../../components/Header/Header.jsx';
 import Footer from '../../components/Footer/Footer.jsx';
 import SearchSection from '../../components/SearchSection/SearchSection.jsx';
@@ -6,35 +6,53 @@ import CardsSection from '../../components/CardsSection/CardsSection.jsx';
 import { moviesApi } from '../../api/MoviesApi';
 import { MoviesContext } from '../../contexts/MoviesContext';
 import { mainApi } from '../../api/MainApi';
-import { moviesApiUrl } from '../../constants';
+import { MOVIES_API_URL } from '../../constants';
 import { filteredMovies } from '../../utils/FilteredMovies';
 
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { moviesData, setMoviesData } = useContext(MoviesContext);
   const [errorText, setErrorText] = useState('');
+  const [movies, setMovies] = useState([]);
   const handleSearchInput = (e) => {
     setMoviesData({ ...moviesData, moviesSearchText: e.target.value.toLowerCase() });
   };
 
   const prepareData = (movies) => {
-    const filteredArray = filteredMovies({ ...moviesData, moviesArray: movies });
-    setMoviesData({ ...moviesData, moviesArray: movies, moviesFiltered: filteredArray });
-    localStorage.setItem('movies', JSON.stringify(moviesData));
+    setMovies(movies);
+    const filteredArray = filteredMovies(movies, { ...moviesData });
+    const moviesObj = {
+      ...moviesData,
+      moviesFiltered: filteredArray,
+    };
+    setMoviesData(moviesObj);
+    localStorage.setItem('movies', JSON.stringify(movies));
+    localStorage.setItem('moviesFiltered', JSON.stringify(moviesObj));
   };
 
   const [savedMovies, setIsSavedMovies] = useState([]);
   const handleChecked = (e) => {
     if (e.target.checked) {
-      const filteredArray = filteredMovies({ ...moviesData, moviesCheckboxFiltered: true });
-      setMoviesData({ ...moviesData, moviesFiltered: filteredArray, moviesCheckboxFiltered: true });
-      localStorage.setItem('movies', JSON.stringify(moviesData));
+      const filteredArray = filteredMovies(movies, { ...moviesData, moviesCheckboxFiltered: true });
+      const movieObj = {
+        ...moviesData,
+        moviesFiltered: filteredArray,
+        moviesCheckboxFiltered: true,
+      };
+      setMoviesData(movieObj);
+      localStorage.setItem('moviesFiltered', JSON.stringify(movieObj));
     } else {
-      const filteredArray = filteredMovies({ ...moviesData, moviesCheckboxFiltered: false });
-      setMoviesData(
-        { ...moviesData, moviesFiltered: filteredArray, moviesCheckboxFiltered: false },
+      const filteredArray = filteredMovies(
+        movies,
+        { ...moviesData, moviesCheckboxFiltered: false },
       );
-      localStorage.setItem('movies', JSON.stringify(moviesData));
+      const moviesObj = {
+        ...moviesData,
+        moviesFiltered: filteredArray,
+        moviesCheckboxFiltered: false,
+      };
+      setMoviesData(moviesObj);
+      localStorage.setItem('moviesFiltered', JSON.stringify(moviesObj));
     }
   };
 
@@ -53,6 +71,7 @@ const Movies = () => {
           setMoviesData({ ...moviesData, moviesFiltered: newSavedMovies });
           const savedMoviesArray = savedMovies
             .filter((el) => el.id !== movie.id);
+          localStorage.setItem('savedMovies', JSON.stringify([...savedMoviesArray]));
           setIsSavedMovies([...savedMoviesArray]);
           localStorage.setItem('movies', JSON.stringify(moviesData));
         })
@@ -70,12 +89,13 @@ const Movies = () => {
         nameEN: movie.nameEN,
         duration: movie.duration,
         id: movie.id,
-        image: `${moviesApiUrl}${movie.image.url}`,
-        thumbnail: `${moviesApiUrl}${movie.image.formats.thumbnail.url}`,
+        image: `${MOVIES_API_URL}${movie.image.url}`,
+        thumbnail: `${MOVIES_API_URL}${movie.image.formats.thumbnail.url}`,
       };
       mainApi
         .saveMovies(savedMovie, localStorage.getItem('jwt'))
         .then(() => {
+          localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, savedMovie]));
           setIsSavedMovies([...savedMovies, savedMovie]);
           const newArray = moviesData.moviesFiltered.map((el) => {
             if (savedMovie.id === el.id) {
@@ -83,8 +103,9 @@ const Movies = () => {
             }
             return el;
           });
+
           setMoviesData({ ...moviesData, moviesFiltered: newArray });
-          localStorage.setItem('movies', JSON.stringify(moviesData));
+          localStorage.setItem('moviesFiltered', JSON.stringify(newArray));
         })
         .catch((err) => {
           console.log(err);
@@ -107,6 +128,7 @@ const Movies = () => {
         }
       })
       .catch((err) => {
+        console.log(err);
         if (err) {
           setErrorText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
         }
@@ -117,15 +139,20 @@ const Movies = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('movies')) {
-      moviesApi
-        .getMovies()
-        .then((movies) => {
-          prepareData(movies);
-        })
-        .catch((err) => {
-          console.log(err);
+    setMovies(JSON.parse(localStorage.getItem('movies')));
+    if (localStorage.getItem('moviesFiltered')) {
+      const moviesFromLocalStorage = JSON.parse(localStorage.getItem('moviesFiltered'));
+      const savedMoviesFromLocalStorage = JSON.parse(localStorage.getItem('savedMovies'));
+      if (savedMoviesFromLocalStorage) {
+        const savedId = savedMoviesFromLocalStorage.map((el) => el.id);
+        moviesFromLocalStorage.moviesFiltered.forEach((el) => {
+          if (savedId.includes(el.id)) {
+            // eslint-disable-next-line no-param-reassign
+            el.isLiked = true;
+          }
         });
+      }
+      setMoviesData(moviesFromLocalStorage);
     }
   }, []);
 

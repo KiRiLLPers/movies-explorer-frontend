@@ -129,6 +129,17 @@
   height: 13px;
 }
 
+.profile__success {
+  color: #FFFFFF;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 13px;
+}
+
 @media screen and (max-width: 768px) {
   .main {
     justify-content: flex-start;

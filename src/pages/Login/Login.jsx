@@ -7,7 +7,7 @@ import { auth } from '../../api/AuthApi';
 import { mainApi } from '../../api/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useForm from '../../hooks/useForm';
-import { validationErrorText } from '../../constants';
+import { VALIDATION_ERROR_TEXT, EMAIL_PATTERN } from '../../constants';
 
 const Login = () => {
   const [formValue, setFormValue] = useState({ email: '', password: '' });
@@ -51,11 +51,11 @@ const Login = () => {
       })
       .catch((err) => {
         if (err === 401) {
-          setErrorText(validationErrorText.login['401']);
+          setErrorText(VALIDATION_ERROR_TEXT.login['401']);
         } else if (err === 400) {
-          setErrorText(validationErrorText.login['400']);
+          setErrorText(VALIDATION_ERROR_TEXT.login['400']);
         } else {
-          setErrorText(validationErrorText['500']);
+          setErrorText(VALIDATION_ERROR_TEXT['500']);
         }
       })
       .finally(() => {
@@ -75,6 +75,7 @@ const Login = () => {
             onChange={hadnleChangeInput}
             isLoading={isLoading}
             error={errors.email}
+            pattern={EMAIL_PATTERN}
           >
           </InputMain>
           <InputMain

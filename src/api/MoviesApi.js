@@ -1,9 +1,8 @@
-import { moviesApiUrl } from '../constants';
-import { mainApi } from './MainApi';
+import { MOVIES_API_URL } from '../constants';
 
 class MoviesApi {
   constructor() {
-    this._baseUrl = moviesApiUrl;
+    this._baseUrl = MOVIES_API_URL;
     this._headers = { 'Content-type': 'application/json' };
   }
 
@@ -18,15 +17,6 @@ class MoviesApi {
   async getMovies() {
     const movies = await this._request('/beatfilm-movies', {
       headers: this._headers,
-    });
-    const savedMovies = await mainApi.getSavedMovies(localStorage.getItem('jwt'));
-
-    const savedId = savedMovies.map((el) => el.id);
-    movies.forEach((el) => {
-      if (savedId.includes(el.id)) {
-        // eslint-disable-next-line no-param-reassign
-        el.isLiked = true;
-      }
     });
 
     return movies;

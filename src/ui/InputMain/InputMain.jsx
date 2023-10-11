@@ -10,6 +10,7 @@ const InputMain = ({
   minLength,
   maxLength,
   value,
+  pattern,
 }) => (
     <div className='main-input'>
       <label className='main-input__label'>{label}</label>
@@ -22,6 +23,7 @@ const InputMain = ({
         minLength={minLength}
         maxLength={maxLength}
         defaultValue={value}
+        pattern={pattern}
         required
       />
       <span
