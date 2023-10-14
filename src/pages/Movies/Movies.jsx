@@ -7,52 +7,50 @@ import { moviesApi } from '../../api/MoviesApi';
 import { MoviesContext } from '../../contexts/MoviesContext';
 import { mainApi } from '../../api/MainApi';
 import { MOVIES_API_URL } from '../../constants';
-import { filteredMovies } from '../../utils/FilteredMovies';
+import { markLikedMovies } from '../../utils/MarkLikedMovies';
+import { filtered } from '../../utils/Filtered';
 
 const Movies = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { moviesData, setMoviesData } = useContext(MoviesContext);
   const [errorText, setErrorText] = useState('');
   const [movies, setMovies] = useState([]);
+  const [errorInputSearchText, setErrorInputSearchText] = useState('');
+  const [savedMovies, setSavedMovies] = useState([]);
+
   const handleSearchInput = (e) => {
     setMoviesData({ ...moviesData, moviesSearchText: e.target.value.toLowerCase() });
   };
 
   const prepareData = (movies) => {
     setMovies(movies);
-    const filteredArray = filteredMovies(movies, { ...moviesData });
+    const filteredArray = filtered(
+      movies,
+      { search: moviesData.moviesSearchText, checked: moviesData.moviesCheckboxFiltered },
+    );
     const moviesObj = {
       ...moviesData,
       moviesFiltered: filteredArray,
     };
-    setMoviesData(moviesObj);
+
     localStorage.setItem('movies', JSON.stringify(movies));
-    localStorage.setItem('moviesFiltered', JSON.stringify(moviesObj));
+    markLikedMovies(moviesObj, setMoviesData);
   };
 
-  const [savedMovies, setIsSavedMovies] = useState([]);
   const handleChecked = (e) => {
-    if (e.target.checked) {
-      const filteredArray = filteredMovies(movies, { ...moviesData, moviesCheckboxFiltered: true });
-      const movieObj = {
-        ...moviesData,
-        moviesFiltered: filteredArray,
-        moviesCheckboxFiltered: true,
-      };
-      setMoviesData(movieObj);
-      localStorage.setItem('moviesFiltered', JSON.stringify(movieObj));
-    } else {
-      const filteredArray = filteredMovies(
-        movies,
-        { ...moviesData, moviesCheckboxFiltered: false },
-      );
-      const moviesObj = {
-        ...moviesData,
-        moviesFiltered: filteredArray,
-        moviesCheckboxFiltered: false,
-      };
-      setMoviesData(moviesObj);
-      localStorage.setItem('moviesFiltered', JSON.stringify(moviesObj));
+    const filteredArray = filtered(
+      movies,
+      { search: moviesData.moviesSearchText, checked: e.target.checked },
+    );
+    const moviesObj = {
+      ...moviesData,
+      moviesFiltered: filteredArray,
+      moviesCheckboxFiltered: e.target.checked,
+    };
+
+    markLikedMovies(moviesObj, setMoviesData);
+    if (moviesObj.moviesFiltered.length === 0) {
+      setErrorText('Ничего не найдено');
     }
   };
 
@@ -72,8 +70,7 @@ const Movies = () => {
           const savedMoviesArray = savedMovies
             .filter((el) => el.id !== movie.id);
           localStorage.setItem('savedMovies', JSON.stringify([...savedMoviesArray]));
-          setIsSavedMovies([...savedMoviesArray]);
-          localStorage.setItem('movies', JSON.stringify(moviesData));
+          setSavedMovies([...savedMoviesArray]);
         })
         .catch((err) => {
           console.log(err);
@@ -95,8 +92,9 @@ const Movies = () => {
       mainApi
         .saveMovies(savedMovie, localStorage.getItem('jwt'))
         .then(() => {
+          console.log(savedMovies, savedMovie);
           localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, savedMovie]));
-          setIsSavedMovies([...savedMovies, savedMovie]);
+          setSavedMovies([...savedMovies, savedMovie]);
           const newArray = moviesData.moviesFiltered.map((el) => {
             if (savedMovie.id === el.id) {
               return { ...el, isLiked: true };
@@ -105,7 +103,7 @@ const Movies = () => {
           });
 
           setMoviesData({ ...moviesData, moviesFiltered: newArray });
-          localStorage.setItem('moviesFiltered', JSON.stringify(newArray));
+          localStorage.setItem('moviesFiltered', JSON.stringify({ ...moviesData, moviesFiltered: newArray }));
         })
         .catch((err) => {
           console.log(err);
@@ -116,9 +114,10 @@ const Movies = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (moviesData.moviesSearchText === '') {
-      setErrorText('Нужно ввести ключевое слово');
+      setErrorInputSearchText('Введите ключевое слово');
       return;
     }
+    setErrorInputSearchText('');
     setIsLoading(true);
     moviesApi.getMovies()
       .then((movies) => {
@@ -143,13 +142,12 @@ const Movies = () => {
     if (localStorage.getItem('moviesFiltered')) {
       const moviesFromLocalStorage = JSON.parse(localStorage.getItem('moviesFiltered'));
       const savedMoviesFromLocalStorage = JSON.parse(localStorage.getItem('savedMovies'));
+      setSavedMovies(savedMoviesFromLocalStorage);
       if (savedMoviesFromLocalStorage) {
         const savedId = savedMoviesFromLocalStorage.map((el) => el.id);
         moviesFromLocalStorage.moviesFiltered.forEach((el) => {
-          if (savedId.includes(el.id)) {
-            // eslint-disable-next-line no-param-reassign
-            el.isLiked = true;
-          }
+          // eslint-disable-next-line no-param-reassign
+          el.isLiked = !!savedId.includes(el.id);
         });
       }
       setMoviesData(moviesFromLocalStorage);
@@ -161,11 +159,12 @@ const Movies = () => {
       <Header></Header>
       <main className='main-movies'>
         <SearchSection
-        onSubmit={handleSearchSubmit}
-        onChange={handleSearchInput}
-        handleChecked={handleChecked}
-        isChecked={moviesData.moviesCheckboxFiltered}
-        value={moviesData.moviesSearchText}
+          onSubmit={handleSearchSubmit}
+          onChange={handleSearchInput}
+          handleChecked={handleChecked}
+          isChecked={moviesData.moviesCheckboxFiltered}
+          value={moviesData.moviesSearchText}
+          errorText={errorInputSearchText}
         ></SearchSection>
         <CardsSection handleSaveOrDeleteMovie={handleSaveOrDeleteMovie} movieArray={moviesData.moviesFiltered} path={'/movies'} isLoading={isLoading} error={errorText}></CardsSection>
       </main>
