@@ -1,5 +1,5 @@
-// const MAIN_API_URL = 'https://api.pershinkirillvm.nomoredomainsicu.ru';
-const MAIN_API_URL = 'http://localhost:3000';
+const MAIN_API_URL = 'https://api.pershinkirillvm.nomoredomainsicu.ru';
+// const MAIN_API_URL = 'http://localhost:3000';
 const MOVIES_API_URL = 'https://api.nomoreparties.co';
 
 const VALIDATION_ERROR_TEXT = {
