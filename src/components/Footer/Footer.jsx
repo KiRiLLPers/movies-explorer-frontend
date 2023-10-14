@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Footer = () => (
   <footer className='footer'>
@@ -7,10 +6,10 @@ const Footer = () => (
     <ul className='footer__items'>
       <li className='footer__item'>© 2023</li>
       <li className='footer__item'>
-        <Link target={'_blank'} to='https://practicum.yandex.ru/'
-              className='footer__link'>Яндекс.Практикум</Link>
-        <Link target={'_blank'} to='https://github.com/KiRiLLPers'
-              className='footer__link'>Github</Link>
+        <a target={'_blank'} href='https://practicum.yandex.ru/'
+              className='footer__link' rel="noreferrer">Яндекс.Практикум</a>
+        <a target={'_blank'} href='https://github.com/KiRiLLPers'
+              className='footer__link' rel="noreferrer">Github</a>
       </li>
     </ul>
   </footer>

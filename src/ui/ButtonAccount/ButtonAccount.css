@@ -13,6 +13,11 @@
 }
 
 .account-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
   text-decoration: none;
   color: #FFFFFF;
   text-align: center;

@@ -1,38 +1,141 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header.jsx';
 import ButtonSign from '../../ui/ButtonSign/ButtonSign.jsx';
 import InputMain from '../../ui/InputMain/InputMain.jsx';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import useForm from '../../hooks/useForm';
+import { mainApi } from '../../api/MainApi';
+import { EMAIL_PATTERN, NAME_PATTERN, VALIDATION_ERROR_TEXT } from '../../constants';
+import { MoviesContext } from '../../contexts/MoviesContext';
 
 const Profile = () => {
   const [isCorrect, setIsCorrect] = useState(false);
+  const [formValue, setFormValue] = useState({ name: '', email: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorText, setErrorText] = useState(null);
+  const [successText, setSuccessText] = useState('');
+  const {
+    errors, isValid, handleChangeInput,
+  } = useForm();
+  const navigate = useNavigate();
+  const { userData, setUserData } = useContext(CurrentUserContext);
+  const { setMoviesData } = useContext(MoviesContext);
+
   const handleCorrectProfile = () => {
     setIsCorrect(() => !isCorrect);
+    setErrorText('');
   };
+  const logOut = () => {
+    setUserData({ ...userData, loggedIn: false });
+    localStorage.clear();
+    setMoviesData({
+      moviesArray: [],
+      moviesFiltered: [],
+      moviesSearchText: '',
+      moviesCheckboxFiltered: false,
+    });
+    navigate('/', { replace: true });
+  };
+
+  const handleSubmit = () => {
+    setIsLoading(true);
+    if (formValue.name !== userData.name || formValue.email !== userData.email) {
+      mainApi
+        .updateUserProfile(formValue, localStorage.getItem('jwt'))
+        .then(() => {
+          setSuccessText('Профиль успешно изменен!');
+          setTimeout(() => {
+            setIsCorrect(false);
+            setSuccessText('');
+          }, 1000);
+          setUserData({ ...userData, name: formValue.name, email: formValue.email });
+          setErrorText('');
+        })
+        .catch((err) => {
+          if (err === 409) {
+            setErrorText(VALIDATION_ERROR_TEXT.profile['409']);
+          } else if (err === 400) {
+            setErrorText(VALIDATION_ERROR_TEXT.profile['400']);
+          } else {
+            setErrorText(VALIDATION_ERROR_TEXT['500']);
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  };
+
+  const handleChange = (e) => {
+    handleChangeInput(e);
+    const { name, value } = e.target;
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    setFormValue({
+      name: userData.name,
+      email: userData.email,
+    });
+  }, []);
+
+  const isNewUserData = formValue.name === userData.name && formValue.email === userData.email;
   return (
     <div className='body'>
       <Header></Header>
       <main className='main'>
         <section className="profile">
           <div className="profile__wrap">
-            <h1 className="profile__title">Привет, Виталий!</h1>
+            <h1 className="profile__title">Привет, {userData.name}!</h1>
             {isCorrect
               ? <form className='profile__form'>
-                <InputMain type='text' label='Имя'></InputMain>
-                <InputMain type='email' label='Email'></InputMain>
+                <InputMain
+                  type='text'
+                  label='Имя'
+                  name='name'
+                  value={userData.name ? userData.name : ''}
+                  onChange={handleChange}
+                  error={errors.name}
+                  pattern={NAME_PATTERN}
+                />
+                <InputMain
+                  type='email'
+                  label='Email'
+                  name='email'
+                  value={userData.email ? userData.email : ''}
+                  onChange={handleChange}
+                  error={errors.email}
+                  pattern={EMAIL_PATTERN}
+                />
               </form>
               : <ul className="profile__info">
-                <li className="profile__item">Имя<span>Виталий</span></li>
-                <li className="profile__item">E-mail<span>pochta@yandex.ru</span></li>
+                <li className="profile__item">Имя<span>{userData.name}</span></li>
+                <li className="profile__item">E-mail<span>{userData.email}</span></li>
               </ul>
             }
             <div className='profile__button-wrap'>
-              <span className='profile__error'>При обновлении профиля произошла ошибка.</span>
+              <span className={`${errorText ? 'profile__error' : 'profile__success'}`}>{errorText || successText}</span>
               {isCorrect
-                ? <ButtonSign title='Сохранить'></ButtonSign>
+                ? <>
+                  <ButtonSign
+                  title='Сохранить'
+                  isValid={isValid}
+                  onSubmit={handleSubmit}
+                  isLoading={isLoading}
+                  isNewUserData={isNewUserData}
+                />
+                  <ButtonSign
+                    title='Назад'
+                    onClick={handleCorrectProfile}/>
+                </>
                 : <div className="profile__buttons">
                   <button className="profile__button" onClick={handleCorrectProfile}>Редактировать
                   </button>
-                  <button className="profile__button">Выйти из аккаунта</button>
+                  <button className="profile__button" onClick={logOut}>Выйти из аккаунта</button>
                 </div>}
             </div>
           </div>

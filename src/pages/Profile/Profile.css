@@ -74,7 +74,10 @@
 
 .profile__form {
   width: 100%;
-  margin-bottom: 189px;
+  margin-bottom: 65px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
 }
 
 .profile__buttons {
@@ -112,7 +115,7 @@
   align-items: center;
   width: 100%;
   flex: 1;
-  gap: 20px 0;
+  gap: 15px 0;
 }
 
 .profile__error {
@@ -123,11 +126,18 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  visibility: hidden;
+  height: 13px;
 }
 
-.profile__error_active {
-  visibility: visible;
+.profile__success {
+  color: #FFFFFF;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  height: 13px;
 }
 
 @media screen and (max-width: 768px) {
@@ -149,6 +159,10 @@
 
   .profile__form {
     margin-bottom: 210px;
+  }
+
+  .profile__button-wrap {
+    margin-bottom: 30px;
   }
 }
 

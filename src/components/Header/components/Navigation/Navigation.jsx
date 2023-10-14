@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ButtonAccount from '../../../../ui/ButtonAccount/ButtonAccount.jsx';
 import ButtonBurger from '../../../../ui/ButtonBurger/ButtonBurger.jsx';
 import ButtonLink from '../../../../ui/ButtonLink/ButtonLink.jsx';
+import { CurrentUserContext } from '../../../../contexts/CurrentUserContext';
 
 const Navigation = ({ handleOpenMenu, isOpen }) => {
-  const loggedIn = true;
+  const { userData } = useContext(CurrentUserContext);
+
   return (
     <nav className='navigation'>
-      {loggedIn && <ul className='navigation__nav'>
+      {userData.loggedIn && <ul className='navigation__nav'>
         <li className='navigation__item navigation__item_size_lg'>
           <ButtonLink title='Фильмы' link='/movies'/>
         </li>
@@ -20,10 +22,10 @@ const Navigation = ({ handleOpenMenu, isOpen }) => {
       </ul>}
       <ul className='navigation__buttons'>
         {
-          loggedIn
+          userData.loggedIn
           && <li className='navigation__item navigation__item_size_lg'><ButtonAccount></ButtonAccount>
           </li>}
-        {!loggedIn && <>
+        {!userData.loggedIn && <>
           <li className='navigation__item'>
             <ButtonLink title='Регистрация' link='/signup'/>
           </li>

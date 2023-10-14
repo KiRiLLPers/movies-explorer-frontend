@@ -44,6 +44,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  height: 12px;
 }
 
 .main-input__error-text_active {
